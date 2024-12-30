@@ -5,6 +5,9 @@ description = "OpenTelemetry Wrapper to send traces, metrics and logs to my otel
 authors = ["Ivanildo Barauna <ivanildo.jnr@outlook.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [
+  { include = "src" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
