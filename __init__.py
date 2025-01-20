@@ -1,11 +1,18 @@
-from deps_injector import wrapper_builder
+from src.deps_injector import wrapper_builder
 
-# Inicializa o Wrapper Builder
-wrapper = wrapper_builder()
 
-# Exponha os serviços diretamente para facilitar o uso
-get_trace_service = wrapper.get_trace_service
-get_log_service = wrapper.get_log_service
-get_metrics_service = wrapper.get_metrics_service
+class OpenObservabilityWrapper:
+    def __init__(self, application_name: str):
+        self.wrapper = wrapper_builder(application_name=application_name)
 
-__all__ = ["wrapper", "get_trace_service", "get_log_service", "get_metrics_service"]
+    def get_trace(self):
+        return self.wrapper.traces().get_tracer()
+
+    def send_log(self):
+        self.wrapper.logs().send_log()
+
+    def increment_metric(self, name: str, tags: dict):
+        self.wrapper.metrics().metric_increment(name=name, tags=tags)
+
+
+__all__ = [OpenObservabilityWrapper]

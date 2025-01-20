@@ -5,22 +5,21 @@ from src.domain.services.metrics_service import MetricsProcessorService
 from src.infrastructure.adapters.log_exporter import LogExporterAdapter
 from src.infrastructure.adapters.metrics_exporter import MetricsExporterAdapter
 from src.infrastructure.adapters.trace_exporter import TraceExporterAdapter
-from src.infrastructure._contants import PROXY_ENDPOINT
 
 
-def wrapper_builder() -> Wrapper:
-    trace_exporter = TraceExporterAdapter(endpoint=PROXY_ENDPOINT)
-    log_exporter = LogExporterAdapter(endpoint=PROXY_ENDPOINT)
-    metrics_exporter = MetricsExporterAdapter(endpoint=PROXY_ENDPOINT)
+def wrapper_builder(application_name: str) -> Wrapper:
+    _trace_exporter = TraceExporterAdapter(application_name=application_name)
+    _log_exporter = LogExporterAdapter(application_name=application_name)
+    _metrics_exporter = MetricsExporterAdapter(application_name=application_name)
 
-    trace_service = TraceProcessorService(exporter=trace_exporter)
-    log_service = LogsProcessorService(exporter=log_exporter)
-    metrics_service = MetricsProcessorService(exporter=metrics_exporter)
+    _trace_service = TraceProcessorService(exporter=_trace_exporter)
+    _log_service = LogsProcessorService(exporter=_log_exporter)
+    _metrics_service = MetricsProcessorService(exporter=_metrics_exporter)
 
     wrapper = Wrapper(
-        trace_service=trace_service,
-        log_service=log_service,
-        metrics_service=metrics_service,
+        trace_service=_trace_service,
+        log_service=_log_service,
+        metrics_service=_metrics_service,
     )
 
     return wrapper
