@@ -1,10 +1,10 @@
-from src.otel_wrapper.builder import Wrapper
-from src.otel_wrapper.domain.services.trace_service import TraceProcessorService
-from src.otel_wrapper.domain.services.logs_service import LogsProcessorService
-from src.otel_wrapper.domain.services.metrics_service import MetricsProcessorService
-from src.otel_wrapper.infrastructure.adapters.log_exporter import LogExporterAdapter
-from src.otel_wrapper.infrastructure.adapters.metrics_exporter import MetricsExporterAdapter
-from src.otel_wrapper.infrastructure.adapters.trace_exporter import TraceExporterAdapter
+from .builder import Wrapper
+from .domain.services.trace_service import TraceProcessorService
+from .domain.services.logs_service import LogsProcessorService
+from .domain.services.metrics_service import MetricsProcessorService
+from .infrastructure.adapters.log_exporter import LogExporterAdapter
+from .infrastructure.adapters.metrics_exporter import MetricsExporterAdapter
+from .infrastructure.adapters.trace_exporter import TraceExporterAdapter
 
 
 def wrapper_builder(application_name: str) -> Wrapper:

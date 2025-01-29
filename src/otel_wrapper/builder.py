@@ -1,6 +1,6 @@
-from src.otel_wrapper.domain.services.logs_service import LogsProcessorService
-from src.otel_wrapper.domain.services.metrics_service import MetricsProcessorService
-from src.otel_wrapper.domain.services.trace_service import TraceProcessorService
+from .domain.services.logs_service import LogsProcessorService
+from .domain.services.metrics_service import MetricsProcessorService
+from .domain.services.trace_service import TraceProcessorService
 
 
 class Wrapper:

@@ -1,5 +1,5 @@
 from typing import Type
-from src.otel_wrapper.infrastructure.ports.outbound_logs_exporter import iLogsExporter
+from otel_wrapper.infrastructure.ports.outbound_logs_exporter import iLogsExporter
 
 
 class LogsProcessorService:
