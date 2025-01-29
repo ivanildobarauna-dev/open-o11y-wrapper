@@ -1,4 +1,4 @@
-from src.deps_injector import wrapper_builder
+from src.otel_wrapper.deps_injector import wrapper_builder
 
 
 class OpenObservabilityWrapper:

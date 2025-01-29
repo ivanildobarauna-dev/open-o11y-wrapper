@@ -1,4 +1,4 @@
-from src.infrastructure.ports.outbound_logs_exporter import iLogsExporter
+from src.otel_wrapper.infrastructure.ports.outbound_logs_exporter import iLogsExporter
 
 
 class LogExporterAdapter(iLogsExporter):

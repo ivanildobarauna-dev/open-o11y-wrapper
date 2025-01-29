@@ -1,4 +1,4 @@
-from src.infrastructure.ports.outbound_metrics_exporter import iMetricsExporter
+from src.otel_wrapper.infrastructure.ports.outbound_metrics_exporter import iMetricsExporter
 
 
 class MetricsExporterAdapter(iMetricsExporter):
