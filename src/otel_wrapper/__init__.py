@@ -8,8 +8,8 @@ class OpenObservabilityWrapper:
     def get_trace(self):
         return self.wrapper.traces().get_tracer()
 
-    def send_log(self):
-        self.wrapper.logs().send_log()
+    def get_logger(self):
+        return self.wrapper.logs().get_logger()
 
     def increment_metric(self, name: str, tags: dict, value: float):
         self.wrapper.metrics().metric_increment(name=name, tags=tags, value=value)

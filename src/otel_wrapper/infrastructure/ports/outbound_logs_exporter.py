@@ -1,7 +1,8 @@
+import logging
 from abc import ABC, abstractmethod
 
 
 class iLogsExporter(ABC):
     @abstractmethod
-    def send_log():
+    def get_logger(self) -> logging.RootLogger:
         pass
