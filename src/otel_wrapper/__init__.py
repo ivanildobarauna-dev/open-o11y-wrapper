@@ -11,8 +11,8 @@ class OpenObservabilityWrapper:
     def send_log(self):
         self.wrapper.logs().send_log()
 
-    def increment_metric(self, name: str, tags: dict):
-        self.wrapper.metrics().metric_increment(name=name, tags=tags)
+    def increment_metric(self, name: str, tags: dict, value: float):
+        self.wrapper.metrics().metric_increment(name=name, tags=tags, value=value)
 
 
 __all__ = [OpenObservabilityWrapper]

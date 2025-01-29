@@ -3,8 +3,8 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.trace import get_tracer, set_tracer_provider
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
-from otel_wrapper.infrastructure.ports.outbound_trace_exporter import iTracesExporter
-from otel_wrapper.domain.dto.application_attributes import ApplicationAttributes
+from ...infrastructure.ports.outbound_trace_exporter import iTracesExporter
+from ...domain.dto.application_attributes import ApplicationAttributes
 
 
 class TraceExporterAdapter(iTracesExporter):

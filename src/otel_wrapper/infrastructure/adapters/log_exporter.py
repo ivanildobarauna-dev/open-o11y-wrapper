@@ -1,8 +1,13 @@
-from otel_wrapper.infrastructure.ports.outbound_logs_exporter import iLogsExporter
+from ...infrastructure.ports.outbound_logs_exporter import iLogsExporter
 
 
 class LogExporterAdapter(iLogsExporter):
-    def __init__(self, endpoint: str):
-        self.endpoint = endpoint
+    ENDPOINT: str = "https://o11y-proxy.ivanildobarauna.dev/"
+    def __init__(self, application_name: str):
+        pass
 
-    def setup(self): ...
+    def setup(self):
+        pass
+    
+    def send_log(self): 
+        pass

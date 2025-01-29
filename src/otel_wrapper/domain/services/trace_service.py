@@ -1,5 +1,5 @@
 from typing import Type
-from otel_wrapper.infrastructure.ports.outbound_trace_exporter import iTracesExporter
+from ...infrastructure.ports.outbound_trace_exporter import iTracesExporter
 
 
 class TraceProcessorService:

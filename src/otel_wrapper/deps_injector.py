@@ -12,9 +12,9 @@ def wrapper_builder(application_name: str) -> Wrapper:
     _log_exporter = LogExporterAdapter(application_name=application_name)
     _metrics_exporter = MetricsExporterAdapter(application_name=application_name)
 
-    _trace_service = TraceProcessorService(exporter=_trace_exporter)
-    _log_service = LogsProcessorService(exporter=_log_exporter)
-    _metrics_service = MetricsProcessorService(exporter=_metrics_exporter)
+    _trace_service = TraceProcessorService(trace_exporter=_trace_exporter)
+    _log_service = LogsProcessorService(log_exporter=_log_exporter)
+    _metrics_service = MetricsProcessorService(metric_exporter=_metrics_exporter)
 
     wrapper = Wrapper(
         trace_service=_trace_service,
