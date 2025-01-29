@@ -6,9 +6,8 @@ authors = ["Ivanildo Barauna <ivanildo.jnr@outlook.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [
-  { include = "src" },
+  { include = "otel_wrapper", from = "src" },
 ]
-
 
 [tool.setuptools.packages.find]
 where = ["src/"]
