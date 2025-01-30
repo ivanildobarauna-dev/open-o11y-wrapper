@@ -29,3 +29,6 @@ class TraceExporterAdapter(iTracesExporter):
         return get_tracer(
             "host-" + self.application_atrributes.application_name,
         )
+        
+    
+        
