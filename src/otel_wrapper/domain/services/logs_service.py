@@ -7,5 +7,8 @@ class LogsProcessorService:
         self.exporter = log_exporter
         
     def new_log(self, msg: str, tags: dict, level: int):
-        logger = self.get_logger()
+        logger = self.exporter.get_logger()
         logger.log(level, msg, extra=tags)
+
+    def get_logger(self):
+        return self.exporter.get_logger()

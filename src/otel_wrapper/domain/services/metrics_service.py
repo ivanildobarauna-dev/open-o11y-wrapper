@@ -7,4 +7,4 @@ class MetricsProcessorService:
         self.exporter = metric_exporter
 
     def metric_increment(self, name: str, tags: dict, value: float):
-        self.exporter.metric_increment(name, tags, value)
+        self.exporter.metric_increment(name=name, tags=tags, value=value)

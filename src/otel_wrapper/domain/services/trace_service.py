@@ -9,3 +9,6 @@ class TraceProcessorService:
 
     def new_span(self, name: str):
         return self.tracer.start_as_current_span(name)
+
+    def get_tracer(self):
+        return self.tracer
