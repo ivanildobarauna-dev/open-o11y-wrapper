@@ -5,13 +5,14 @@ class OpenObservabilityWrapper:
     def __init__(self, application_name: str):
         self.wrapper = wrapper_builder(application_name=application_name)
 
-    def get_trace(self):
-        return self.wrapper.traces().get_tracer()
+    def new_span(self, name: str):
+        span = self.wrapper.traces().new_span(name=name)
+        return span
 
-    def get_logger(self):
-        return self.wrapper.logs().get_logger()
+    def new_log(self, msg: str, tags: dict, level: str):
+        return self.wrapper.logs().new_log(msg=msg, tags=tags, level=level)
 
-    def increment_metric(self, name: str, tags: dict, value: float):
+    def metric_increment(self, name: str, tags: dict, value: float):
         self.wrapper.metrics().metric_increment(name=name, tags=tags, value=value)
 
 
