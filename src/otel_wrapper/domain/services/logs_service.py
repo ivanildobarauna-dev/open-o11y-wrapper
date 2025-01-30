@@ -9,6 +9,6 @@ class LogsProcessorService:
     def get_logger(self):
         return self.exporter.get_logger()
     
-    def new_log(self, msg: str, tags: dict, level: str):
+    def new_log(self, msg: str, tags: dict, level: int):
         logger = self.get_logger()
         logger.log(level, msg, extra=tags)

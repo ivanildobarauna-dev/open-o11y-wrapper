@@ -25,7 +25,7 @@ class LogExporterAdapter(iLogsExporter):
         self.provider.add_log_record_processor(self.processor)
         set_logger_provider(self.provider)
 
-        self.handler = LoggingHandler(level=logging.INFO, logger_provider=self.provider)
+        self.handler = LoggingHandler(level=logging.DEBUG, logger_provider=self.provider)
 
         self.logger = logging.getLogger()
         self.logger.addHandler(self.handler)
