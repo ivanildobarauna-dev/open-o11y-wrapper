@@ -4,8 +4,11 @@ from ...infrastructure.ports.outbound_trace_exporter import iTracesExporter
 
 class TraceProcessorService:
     def __init__(self, trace_exporter: Type[iTracesExporter]):
-        self.exporter = trace_exporter
-        self.tracer = self.exporter.get_tracer()
+        self._exporter = trace_exporter
+        self._tracer = self._exporter.get_tracer()
+
+    def new_span(self, name: str):
+        return self._tracer.start_span(name=name)
 
     def get_tracer(self):
-        return self.tracer
+        return self._tracer

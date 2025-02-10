@@ -1,18 +1,14 @@
 from .deps_injector import wrapper_builder
+from .builder import Wrapper
 
 
-class OpenObservabilityWrapper:
+class OpenObservability:
     def __init__(self, application_name: str):
-        self.wrapper = wrapper_builder(application_name=application_name)
+        self._wrapper = wrapper_builder(application_name=application_name)
 
-    def get_trace(self):
-        return self.wrapper.traces().get_tracer()
-
-    def get_logger(self):
-        return self.wrapper.logs().get_logger()
-
-    def increment_metric(self, name: str, tags: dict, value: float):
-        self.wrapper.metrics().metric_increment(name=name, tags=tags, value=value)
+    def get_wrapper(self) -> Wrapper:
+        return self._wrapper
 
 
-__all__ = [OpenObservabilityWrapper]
+
+__all__ = [OpenObservability]

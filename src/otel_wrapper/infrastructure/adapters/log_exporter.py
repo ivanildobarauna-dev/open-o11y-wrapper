@@ -1,3 +1,4 @@
+import os
 import logging
 from opentelemetry.sdk.resources import Resource, SERVICE_NAME, DEPLOYMENT_ENVIRONMENT
 from opentelemetry.exporter.otlp.proto.grpc._log_exporter import OTLPLogExporter
@@ -9,8 +10,9 @@ from ...infrastructure.ports.outbound_logs_exporter import iLogsExporter
 from ...domain.dto.application_attributes import ApplicationAttributes
 
 class LogExporterAdapter(iLogsExporter):
-    ENDPOINT: str = "https://o11y-proxy.ivanildobarauna.dev/"
+    DEFAULT_ENDPOINT: str = "https://o11y-proxy.ivanildobarauna.dev/"
     def __init__(self, application_name: str):
+        self.exporter_endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", self.DEFAULT_ENDPOINT)
         self.application_atrributes = ApplicationAttributes(
             application_name=application_name
         )
@@ -21,11 +23,11 @@ class LogExporterAdapter(iLogsExporter):
             }
         )
         self.provider = LoggerProvider(resource=self.resource)
-        self.processor = BatchLogRecordProcessor(OTLPLogExporter(endpoint=self.ENDPOINT))
+        self.processor = BatchLogRecordProcessor(OTLPLogExporter(endpoint=self.exporter_endpoint))
         self.provider.add_log_record_processor(self.processor)
         set_logger_provider(self.provider)
 
-        self.handler = LoggingHandler(level=logging.INFO, logger_provider=self.provider)
+        self.handler = LoggingHandler(level=logging.DEBUG, logger_provider=self.provider)
 
         self.logger = logging.getLogger()
         self.logger.addHandler(self.handler)
