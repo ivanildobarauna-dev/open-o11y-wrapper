@@ -1,3 +1,4 @@
+import os
 from opentelemetry.sdk.resources import Resource, SERVICE_NAME, DEPLOYMENT_ENVIRONMENT
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
@@ -8,9 +9,10 @@ from ...domain.dto.application_attributes import ApplicationAttributes
 
 
 class TraceExporterAdapter(iTracesExporter):
-    ENDPOINT: str = "https://o11y-proxy.ivanildobarauna.dev/"
+    DEFAULT_ENDPOINT: str = "https://o11y-proxy.ivanildobarauna.dev/"
 
     def __init__(self, application_name: str):
+        self.exporter_endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", self.DEFAULT_ENDPOINT)
         self.application_atrributes = ApplicationAttributes(
             application_name=application_name
         )
@@ -21,7 +23,7 @@ class TraceExporterAdapter(iTracesExporter):
             }
         )
         self.provider = TracerProvider(resource=self.resource)
-        self.processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=self.ENDPOINT))
+        self.processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=self.exporter_endpoint))
         self.provider.add_span_processor(self.processor)
         set_tracer_provider(self.provider)
 

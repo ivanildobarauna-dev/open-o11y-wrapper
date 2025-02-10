@@ -4,11 +4,11 @@ from ...infrastructure.ports.outbound_logs_exporter import iLogsExporter
 
 class LogsProcessorService:
     def __init__(self, log_exporter: Type[iLogsExporter]):
-        self.exporter = log_exporter
+        self._exporter = log_exporter
         
     def new_log(self, msg: str, tags: dict, level: int):
-        logger = self.exporter.get_logger()
+        logger = self._exporter.get_logger()
         logger.log(level, msg, extra=tags)
 
     def get_logger(self):
-        return self.exporter.get_logger()
+        return self._exporter.get_logger()
