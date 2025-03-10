@@ -26,7 +26,9 @@ class MetricsExporterAdapter(iMetricsExporter):
             )
 
             # Get the metrics-specific endpoint
-            self.exporter_endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", self.DEFAULT_ENDPOINT)
+            self.exporter_endpoint = os.getenv(
+                "OTEL_EXPORTER_OTLP_ENDPOINT", self.DEFAULT_ENDPOINT
+            )
 
             # Create resource with application attributes
             self.resource = Resource.create(
