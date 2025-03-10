@@ -10,5 +10,4 @@ class OpenObservability:
         return self._wrapper
 
 
-
 __all__ = [OpenObservability]

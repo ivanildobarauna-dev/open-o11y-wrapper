@@ -7,6 +7,7 @@ from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExport
 from ...infrastructure.ports.outbound_trace_exporter import iTracesExporter
 from ...domain.dto.application_attributes import ApplicationAttributes
 
+
 class TraceExporterAdapter(iTracesExporter):
     DEFAULT_ENDPOINT: str = "https://o11y-proxy.ivanildobarauna.dev/"
     _instance = None
@@ -20,11 +21,15 @@ class TraceExporterAdapter(iTracesExporter):
     def _initialize(self, application_name: str):
         try:
             # Initialize application attributes with custom configuration
-            self.application_attributes = ApplicationAttributes(application_name=application_name)
-            
+            self.application_attributes = ApplicationAttributes(
+                application_name=application_name
+            )
+
             # Get the traces-specific endpoint
-            self.exporter_endpoint = self.application_attributes.endpoints.get_traces_endpoint()
-            
+            self.exporter_endpoint = (
+                self.application_attributes.endpoints.get_traces_endpoint()
+            )
+
             # Initialize tracer provider if not already set
             if not isinstance(trace.get_tracer_provider(), TracerProvider):
                 # Create resource with application attributes
@@ -34,18 +39,22 @@ class TraceExporterAdapter(iTracesExporter):
                         DEPLOYMENT_ENVIRONMENT: self.application_attributes.environment,
                     }
                 )
-                
+
                 # Create tracer provider with resource
                 self.provider = TracerProvider(resource=self.resource)
-                
+
                 # Create and add span processor with OTLP exporter
                 try:
-                    exporter = OTLPSpanExporter(endpoint=self.exporter_endpoint, timeout=10)
+                    exporter = OTLPSpanExporter(
+                        endpoint=self.exporter_endpoint, timeout=10
+                    )
                     self.processor = BatchSpanProcessor(exporter)
                     self.provider.add_span_processor(self.processor)
                     trace.set_tracer_provider(self.provider)
                 except Exception as e:
-                    print(f"Warning: Failed to initialize OTLP trace exporter: {str(e)}")
+                    print(
+                        f"Warning: Failed to initialize OTLP trace exporter: {str(e)}"
+                    )
                     # Set tracer provider even without exporter
                     trace.set_tracer_provider(self.provider)
             else:
@@ -53,7 +62,9 @@ class TraceExporterAdapter(iTracesExporter):
                 self.provider = trace.get_tracer_provider()
 
             # Get tracer with application name
-            self._tracer = self.provider.get_tracer(f"host-{self.application_attributes.application_name}")
+            self._tracer = self.provider.get_tracer(
+                f"host-{self.application_attributes.application_name}"
+            )
         except Exception as e:
             print(f"Error initializing trace exporter: {str(e)}")
             # Fallback to default tracer

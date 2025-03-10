@@ -9,35 +9,38 @@ from opentelemetry.sdk.resources import SERVICE_NAME, SERVICE_VERSION, Resource
 from ...infrastructure.ports.outbound_logs_exporter import iLogsExporter
 from ...domain.dto.application_attributes import ApplicationAttributes
 
+
 class LogExporterAdapter(iLogsExporter):
     DEFAULT_ENDPOINT: str = "https://o11y-proxy.ivanildobarauna.dev/"
     _instance = None
-    
+
     def __new__(cls, application_name: str):
         if cls._instance is None:
             cls._instance = super(LogExporterAdapter, cls).__new__(cls)
             cls._instance._initialize(application_name)
         return cls._instance
-        
+
     def _initialize(self, application_name: str):
         try:
             # Initialize application attributes with custom configuration
             self.application_attributes = ApplicationAttributes(
                 application_name=application_name
             )
-            
+
             # Get the logs-specific endpoint
-            self.exporter_endpoint = self.application_attributes.endpoints.get_logs_endpoint()
+            self.exporter_endpoint = (
+                self.application_attributes.endpoints.get_logs_endpoint()
+            )
             self.resource = Resource.create(
                 attributes={
                     SERVICE_NAME: self.application_attributes.application_name,
                     DEPLOYMENT_ENVIRONMENT: self.application_attributes.environment,
                 }
             )
-            
+
             # Create logger provider with resource
             self.provider = LoggerProvider(resource=self.resource)
-            
+
             # Create OTLP exporter with configurable endpoint
             try:
                 self.processor = BatchLogRecordProcessor(
@@ -50,10 +53,12 @@ class LogExporterAdapter(iLogsExporter):
                 # Fallback to console logging
                 self.provider = LoggerProvider(resource=self.resource)
                 set_logger_provider(self.provider)
-            
+
             # Create logging handler with configured level
             log_level = self._get_log_level()
-            self.handler = LoggingHandler(level=log_level, logger_provider=self.provider)
+            self.handler = LoggingHandler(
+                level=log_level, logger_provider=self.provider
+            )
 
             # Configure logger
             self.logger = logging.getLogger()
@@ -63,7 +68,7 @@ class LogExporterAdapter(iLogsExporter):
             print(f"Error initializing log exporter: {str(e)}")
             # Ensure we at least have a logger
             self.logger = logging.getLogger()
-            
+
     def _get_log_level(self) -> int:
         """Get log level from environment or use default"""
         log_level_str = os.getenv("OTEL_LOG_LEVEL", "INFO").upper()
@@ -72,7 +77,7 @@ class LogExporterAdapter(iLogsExporter):
             "INFO": logging.INFO,
             "WARNING": logging.WARNING,
             "ERROR": logging.ERROR,
-            "CRITICAL": logging.CRITICAL
+            "CRITICAL": logging.CRITICAL,
         }
         return log_level_map.get(log_level_str, logging.INFO)
 

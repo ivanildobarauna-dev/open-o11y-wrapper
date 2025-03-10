@@ -9,11 +9,14 @@ from tests.mocks import *
 @pytest.fixture(autouse=True)
 def mock_env_variables():
     """Mock environment variables used in the wrapper."""
-    with patch.dict(os.environ, {
-        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://test-otel-collector:4317",
-        "OTEL_LOG_LEVEL": "INFO",
-        "__SCOPE__": "Testing"
-    }):
+    with patch.dict(
+        os.environ,
+        {
+            "OTEL_EXPORTER_OTLP_ENDPOINT": "http://test-otel-collector:4317",
+            "OTEL_LOG_LEVEL": "INFO",
+            "__SCOPE__": "Testing",
+        },
+    ):
         yield
 
 
@@ -33,11 +36,11 @@ def mock_meter():
     counter = MagicMock()
     histogram = MagicMock()
     gauge = MagicMock()
-    
+
     meter.create_counter.return_value = counter
     meter.create_histogram.return_value = histogram
     meter.create_observable_gauge.return_value = gauge
-    
+
     return meter
 
 

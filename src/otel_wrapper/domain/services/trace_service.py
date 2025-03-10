@@ -15,7 +15,9 @@ class TraceProcessorService:
         self._trace_context_propagator = TraceContextTextMapPropagator()
         self._baggage_propagator = W3CBaggagePropagator()
 
-    def new_span(self, name: str, kind: SpanKind = SpanKind.INTERNAL, attributes: dict = None):
+    def new_span(
+        self, name: str, kind: SpanKind = SpanKind.INTERNAL, attributes: dict = None
+    ):
         """Create a new span with the given name, kind, and attributes."""
         try:
             if attributes is None:
@@ -26,7 +28,9 @@ class TraceProcessorService:
             return None
 
     @contextlib.contextmanager
-    def span_in_context(self, name: str, kind: SpanKind = SpanKind.INTERNAL, attributes: dict = None):
+    def span_in_context(
+        self, name: str, kind: SpanKind = SpanKind.INTERNAL, attributes: dict = None
+    ):
         """Context manager for creating a span and setting it as the current context."""
         span = self.new_span(name, kind, attributes)
         try:
@@ -41,7 +45,7 @@ class TraceProcessorService:
         self._trace_context_propagator.inject(carrier=headers, context=context)
         self._baggage_propagator.inject(carrier=headers, context=context)
         return headers
-        
+
     def extract_context_from_headers(self, headers: dict) -> Context:
         """Extract trace context from headers to continue traces across service boundaries."""
         context = self._trace_context_propagator.extract(carrier=headers)
