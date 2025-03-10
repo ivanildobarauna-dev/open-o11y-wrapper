@@ -1,5 +1,7 @@
 # OpenTelemetry Wrapper
 
+[![Python Tests](https://github.com/ivanildobarauna-dev/open-o11y-wrapper/actions/workflows/python-tests.yml/badge.svg)](https://github.com/ivanildobarauna-dev/open-o11y-wrapper/actions/workflows/python-tests.yml)
+
 A comprehensive Python wrapper for OpenTelemetry that simplifies sending traces, metrics, and logs using the OTLP protocol.
 
 ## Features
