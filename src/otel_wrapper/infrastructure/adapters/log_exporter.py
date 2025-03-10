@@ -28,9 +28,10 @@ class LogExporterAdapter(iLogsExporter):
             )
 
             # Get the logs-specific endpoint
-            self.exporter_endpoint = (
-                self.application_attributes.endpoints.get_logs_endpoint()
+            self.exporter_endpoint = os.getenv(
+                "OTEL_EXPORTER_OTLP_ENDPOINT", self.DEFAULT_ENDPOINT
             )
+
             self.resource = Resource.create(
                 attributes={
                     SERVICE_NAME: self.application_attributes.application_name,

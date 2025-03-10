@@ -26,8 +26,8 @@ class TraceExporterAdapter(iTracesExporter):
             )
 
             # Get the traces-specific endpoint
-            self.exporter_endpoint = (
-                self.application_attributes.endpoints.get_traces_endpoint()
+            self.exporter_endpoint = os.getenv(
+                "OTEL_EXPORTER_OTLP_ENDPOINT", self.DEFAULT_ENDPOINT
             )
 
             # Initialize tracer provider if not already set
