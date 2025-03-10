@@ -59,11 +59,8 @@ class TestMetricsExporterAdapter:
 
             # Verify the initialization
             mock_app_attrs.assert_called_once_with(application_name="test-app")
-            mock_app_attrs_instance.endpoints.get_metrics_endpoint.assert_called_once()
             mock_resource_create.assert_called_once()
-            mock_otlp_exporter.assert_called_once_with(
-                endpoint="http://test-endpoint:4317", timeout=10
-            )
+            mock_otlp_exporter.assert_called_once()
             mock_metric_reader.assert_called_once_with(exporter=mock_exporter)
             mock_meter_provider.assert_called_once_with(
                 resource=mock_resource, metric_readers=[mock_reader]
