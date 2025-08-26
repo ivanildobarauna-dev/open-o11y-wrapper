@@ -4,6 +4,8 @@
 
 A comprehensive Python wrapper for OpenTelemetry that simplifies sending traces, metrics, and logs using the OTLP protocol.
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ivanildobarauna-dev/open-o11y-wrapper)
+
 ## Features
 
 - **Unified API** for traces, metrics, and logs
